@@ -1,5 +1,4 @@
 import { type NextRequest, NextResponse } from "next/server";
-import type { SupabaseEvent } from "@/lib/supabase";
 import { supabase } from "@/lib/supabase";
 
 // GET /api/events - Fetch all events

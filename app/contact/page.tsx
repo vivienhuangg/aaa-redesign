@@ -18,7 +18,7 @@ export default function ContactPage() {
 	const [isSending, setIsSending] = useState(false);
 	const [sent, setSent] = useState(false);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setIsSending(true);
@@ -119,7 +119,7 @@ export default function ContactPage() {
 								</CardTitle>
 								<p className="text-warm-gray-600 text-center">
 									Have questions about what we do? Interested in sponsoring?
-									We'd love to hear from you!
+									We&apos;d love to hear from you!
 								</p>
 							</CardHeader>
 							<CardContent className="flex flex-col items-center">

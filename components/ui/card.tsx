@@ -1,4 +1,3 @@
-// @ts-nocheck
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -45,7 +44,7 @@ function CardWithImage({ imageSrc, imageAlt, children, className, ...props }) {
 		>
 			<div className="flex items-start gap-6 p-6 h-full">
 				<div className="w-1/3 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-					<Image
+					<img
 						src={imageSrc}
 						alt={imageAlt}
 						className="w-full h-auto object-cover object-center border-5 border-yellow"
@@ -96,10 +95,7 @@ function ExecCard({ position, photo, people, className, ...props }) {
 							)}
 						>
 							{people.map(
-								(
-									{ name, class: year, major, involved_in, fav_memory },
-									_index,
-								) => (
+								({ name, class: year, major, involved_in, fav_memory }) => (
 									<div
 										key={name}
 										className="flex flex-col justify-between h-full"

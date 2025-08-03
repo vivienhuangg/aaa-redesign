@@ -81,7 +81,7 @@ function ExecCard({ position, photo, people, className, ...props }) {
 								fontSize:
 									position === "Spring Reps"
 										? "clamp(0.25rem, 1.1vw, 1.2rem)"
-										: "clamp(0.3rem, 1.25vw, 1.25vw)",
+										: "clamp(0.3rem, 1.5vw, 1.5vw)",
 							}}
 						>
 							{position}

@@ -27,19 +27,6 @@ export function Toast({ message, type, onClose, duration = 5000 }) {
 		}
 	};
 
-	const getIconColor = () => {
-		switch (type) {
-			case "success":
-				return "text-green-600";
-			case "error":
-				return "text-red-600";
-			case "info":
-				return "text-blue-600";
-			default:
-				return "text-gray-600";
-		}
-	};
-
 	if (!isVisible) {
 		return null;
 	}

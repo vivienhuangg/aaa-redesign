@@ -18,7 +18,7 @@ export default function ContactPage() {
 	const [isSending, setIsSending] = useState(false);
 	const [sent, setSent] = useState(false);
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		setIsSending(true);

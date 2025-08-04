@@ -56,22 +56,22 @@ export default function ContactPage() {
 			<NavBar></NavBar>
 
 			{/* Contact Section */}
-			<section className="py-20">
+			<section className="py-16 md:py-20">
 				<div className="container mx-auto px-4">
-					<div className="text-center mb-16">
-						<h2 className="text-5xl font-bold text-warm-gray-800 mb-4">
+					<div className="text-center mb-8 md:mb-16">
+						<h2 className="text-3xl md:text-5xl font-bold text-warm-gray-800 mb-4">
 							Contact & Join Us
 						</h2>
-						<p className="text-xl text-warm-gray-700 max-w-3xl mx-auto">
+						<p className="text-lg md:text-xl text-warm-gray-700 max-w-3xl mx-auto">
 							Join the fAAAm!
 						</p>
 					</div>
 
-					<div className="flex gap-12">
-						<div className="w-1/2 flex flex-col gap-4">
+					<div className="flex flex-col md:flex-row gap-6 md:gap-12">
+						<div className="w-full md:w-1/2 flex flex-col gap-4">
 							<Card className=" bg-warm-white/90 border-accent ">
 								<CardHeader className="flex flex-col items-center">
-									<CardTitle className="text-2xl text-center">
+									<CardTitle className="text-xl md:text-2xl text-center">
 										Join the Mailing List
 									</CardTitle>
 									<p className="text-warm-gray-600 text-center">
@@ -90,7 +90,7 @@ export default function ContactPage() {
 							{/* Social Media Links */}
 							<Card className=" bg-warm-white/90 border-accent ">
 								<CardHeader className="flex flex-col items-center">
-									<CardTitle className=" text-2xl text-center">
+									<CardTitle className="text-xl md:text-2xl text-center">
 										Follow Us on Social Media
 									</CardTitle>
 								</CardHeader>
@@ -112,72 +112,74 @@ export default function ContactPage() {
 						{/* Mailing List Form */}
 
 						{/* Get in Touch Form */}
-						<Card className="bg-warm-white/90 border-accent">
-							<CardHeader className="flex flex-col items-center">
-								<CardTitle className="text-warm-gray-800 text-2xl text-center">
-									Get in Touch
-								</CardTitle>
-								<p className="text-warm-gray-600 text-center">
-									Have questions about what we do? Interested in sponsoring?
-									We&apos;d love to hear from you!
-								</p>
-							</CardHeader>
-							<CardContent className="flex flex-col items-center">
-								<form
-									onSubmit={handleSubmit}
-									className="space-y-4 flex flex-col items-center w-full"
-								>
-									<Input
-										type="text"
-										placeholder="Your name"
-										value={formData.name}
-										onChange={(e) =>
-											setFormData({ ...formData, name: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Input
-										type="text"
-										placeholder="Subject"
-										value={formData.subject}
-										onChange={(e) =>
-											setFormData({ ...formData, subject: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Input
-										type="email"
-										placeholder="Your email"
-										value={formData.email}
-										onChange={(e) =>
-											setFormData({ ...formData, email: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Textarea
-										placeholder="Your message"
-										value={formData.message}
-										onChange={(e) =>
-											setFormData({ ...formData, message: e.target.value })
-										}
-										required
-										rows={4}
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-
-									<Button
-										type="submit"
-										disabled={isSending}
-										className="px-4 py-2 text-center bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+						<div className="w-full md:w-1/2">
+							<Card className="bg-warm-white/90 border-accent">
+								<CardHeader className="flex flex-col items-center">
+									<CardTitle className="text-warm-gray-800 text-xl md:text-2xl text-center">
+										Get in Touch
+									</CardTitle>
+									<p className="text-warm-gray-600 text-center">
+										Have questions about what we do? Interested in sponsoring?
+										We&apos;d love to hear from you!
+									</p>
+								</CardHeader>
+								<CardContent className="flex flex-col items-center">
+									<form
+										onSubmit={handleSubmit}
+										className="space-y-4 flex flex-col items-center w-full"
 									>
-										{isSending ? "Sending…" : sent ? "Sent!" : "Send Message"}
-									</Button>
-								</form>
-							</CardContent>
-						</Card>
+										<Input
+											type="text"
+											placeholder="Your name"
+											value={formData.name}
+											onChange={(e) =>
+												setFormData({ ...formData, name: e.target.value })
+											}
+											required
+											className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
+										/>
+										<Input
+											type="text"
+											placeholder="Subject"
+											value={formData.subject}
+											onChange={(e) =>
+												setFormData({ ...formData, subject: e.target.value })
+											}
+											required
+											className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
+										/>
+										<Input
+											type="email"
+											placeholder="Your email"
+											value={formData.email}
+											onChange={(e) =>
+												setFormData({ ...formData, email: e.target.value })
+											}
+											required
+											className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
+										/>
+										<Textarea
+											placeholder="Your message"
+											value={formData.message}
+											onChange={(e) =>
+												setFormData({ ...formData, message: e.target.value })
+											}
+											required
+											rows={4}
+											className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
+										/>
+
+										<Button
+											type="submit"
+											disabled={isSending}
+											className="px-4 py-2 text-center bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+										>
+											{isSending ? "Sending…" : sent ? "Sent!" : "Send Message"}
+										</Button>
+									</form>
+								</CardContent>
+							</Card>
+						</div>
 					</div>
 				</div>
 			</section>

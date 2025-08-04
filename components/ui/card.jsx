@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 /**
@@ -63,12 +62,14 @@ function ExecCard({ position, photo, people, className, ...props }) {
 	return (
 		<div className={cn("mx-auto", className)} {...props}>
 			<div className="bg-background text-card-foreground rounded-xl border-2 border-accent transition-all duration-300">
-				<div className="flex items-stretch gap-4 p-4">
+				<div className="flex flex-col md:flex-row items-stretch gap-4 p-4">
 					{/* Image container drives height */}
 					<div
 						className={cn(
-							"rounded-lg overflow-hidden bg-muted flex-shrink-0",
-							position === "Spring Reps" ? "w-1/2" : "w-1/3",
+							"rounded-xl overflow-hidden bg-muted flex-shrink-0",
+							// Mobile: full width, Desktop: conditional width
+							"w-full md:w-1/3",
+							position === "Spring Reps" ? "md:w-1/2" : "",
 						)}
 					>
 						<img
@@ -78,15 +79,12 @@ function ExecCard({ position, photo, people, className, ...props }) {
 						/>
 					</div>
 
-					{/* Right side matches image height */}
-					<div className="flex-1 flex flex-col h-full min-w-0">
+					{/* Content side matches image height */}
+					<div className="flex-1 flex flex-col md:h-full min-w-0 gap-3 px-2 md:text-left text-center">
 						<h2
-							className="font-bold text-accent mb-2"
+							className="font-bold text-accent"
 							style={{
-								fontSize:
-									// position === "Spring Reps"
-									// 	? "clamp(0.25rem, 1.1vw, 1.2rem)"
-									"clamp(0.3rem, 1.5vw, 1.5vw)",
+								fontSize: "clamp(1.2rem, 1.75vw, 1.75vw)",
 							}}
 						>
 							{position}
@@ -94,8 +92,7 @@ function ExecCard({ position, photo, people, className, ...props }) {
 
 						<div
 							className={cn(
-								"grid gap-4 flex-1",
-								people.length === 2 ? "grid-rows-2" : "grid-rows-1",
+								"flex gap-3 flex-col",
 								people.length > 2 ? "gap-2" : "",
 							)}
 						>
@@ -103,7 +100,7 @@ function ExecCard({ position, photo, people, className, ...props }) {
 								({ name, class: year, major, involved_in, fav_memory }) => (
 									<div
 										className={cn(
-											"flex flex-col gap-2 h-full",
+											"flex flex-col gap-1.5 h-full",
 											people.length > 2 ? "gap-0" : "",
 										)}
 									>
@@ -113,7 +110,7 @@ function ExecCard({ position, photo, people, className, ...props }) {
 												fontSize:
 													// position === "Spring Reps"
 													// 	? "clamp(0.18rem, 0.95vw, 1.1rem)"
-													"clamp(0.26rem, 1.25vw, 1.25vw)",
+													"clamp(1rem, 1.25vw, 1.25vw)",
 											}}
 										>
 											{name} (&apos;{year})
@@ -123,9 +120,9 @@ function ExecCard({ position, photo, people, className, ...props }) {
 												className="text-accent font-serif font-bold leading-tight"
 												style={{
 													fontSize:
-														// position === "Spring Reps"
-														// 	? "clamp(0.16rem, 0.85vw, 1rem)"
-														"clamp(0.22rem, 1.05vw, 1.05vw)",
+														position === "Spring Reps"
+															? "clamp(0.8rem, 1.05vw, 1.05vw)"
+															: "clamp(1rem, 1.15vw, 1.15vw)",
 												}}
 											>
 												{major} | {involved_in}
@@ -133,12 +130,12 @@ function ExecCard({ position, photo, people, className, ...props }) {
 										)}
 										{fav_memory && (
 											<p
-												className="text-black font-serif text-justify leading-tight flex-1"
+												className="text-black font-serif leading-tight md:flex-1 md:text-justify"
 												style={{
 													fontSize:
-														// position === "Spring Reps"
-														// 	? "clamp(0.16rem, 0.85vw, 1rem)"
-														"clamp(0.22rem, 1.05vw, 1.05vw)",
+														position === "Spring Reps"
+															? "clamp(0.8rem, 1.05vw, 1.05vw)"
+															: "clamp(1rem, 1.15vw, 1.15vw)",
 												}}
 											>
 												<b>Favorite Memory:</b>{" "}

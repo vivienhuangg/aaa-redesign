@@ -199,14 +199,6 @@ export default function ExecPage() {
 						"Cooking and prepping for our annual Grains of Rice banquet.",
 				},
 				{
-					name: "Andy Zhang",
-					class: "27",
-					major: "Computer Science and Engineering (6-3) & Mathematics (18)",
-					involved_in: "Men's Fencing, Phi Delta Theta",
-					fav_memory: "Celebrating after Grains of Rice",
-				},
-
-				{
 					name: "Warren Nam",
 					class: "28",
 					major:
@@ -215,35 +207,41 @@ export default function ExecPage() {
 					fav_memory: "Grains of Rice, surely this year I'll go to retreat",
 				},
 				{
-					name: "Shaunuk Joshi",
-					class: "27",
-					major: "Computer Science and Engineering (6-3)",
-					involved_in: "Men's Varsity Football, Phi Beta Epsilon",
-					fav_memory: "Cooking for Grains of Rice this spring",
-				},
-
-				{
 					name: "Rebecca Xiong",
 					class: "28",
 					major: "Computer Science and Engineering (6-3)",
 					involved_in: "Kappa Alpha Theta",
 					fav_memory: "AAA retreat so fun to get to know everyone",
 				},
+				{
+					name: "Shaunuk Joshi",
+					class: "27",
+					major: "Computer Science and Engineering (6-3)",
+					involved_in: "Men's Varsity Football, Phi Beta Epsilon",
+					fav_memory: "Cooking for Grains of Rice this spring",
+				},
+				{
+					name: "Andy Zhang",
+					class: "27",
+					major: "Computer Science and Engineering (6-3) & Mathematics (18)",
+					involved_in: "Men's Fencing, Phi Delta Theta",
+					fav_memory: "Celebrating after Grains of Rice",
+				},
 			],
 		},
 	];
 
 	return (
-		<div className="min-h-screen bg-background py-20 relative overflow-hidden">
+		<div className="min-h-screen bg-background py-16 md:py-20 relative overflow-hidden">
 			<NavBar />
-			<div className="container mx-auto px-2">
-				<div className="text-center mb-16">
-					<h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">
+			<div className="container mx-auto px-4 md:px-2">
+				<div className="text-center mb-8 md:mb-16">
+					<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-foreground mb-6">
 						meet the exec!
 					</h1>
 				</div>
 
-				<div className="grid grid-cols-1 gap-8">
+				<div className="grid grid-cols-1 gap-6 md:gap-8">
 					{execBoard.map((position) => (
 						<ExecCard
 							className="bg-white border-border"

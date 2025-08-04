@@ -63,14 +63,14 @@ export default function CalendarPage() {
 				{/* Calendar Section */}
 				<div className="container mx-auto px-4">
 					<div className="text-center mb-12">
-						<h2 className="text-5xl font-bold text-primary mb-4">
+						<h2 className="md:text-5xl text-3xl font-bold text-primary mb-4">
 							c<span className="text-accent">AAA</span>lendar
 						</h2>
 					</div>
 
-					<div className="flex flex-row w-full gap-6">
+					<div className="flex md:flex-row flex-col w-full gap-6">
 						{/* Calendar on the left */}
-						<div className="w-2/3">
+						<div className="w-full md:w-2/3">
 							<div className="w-full h-full">
 								<Calendar
 									events={apiEvents}
@@ -88,7 +88,7 @@ export default function CalendarPage() {
 						</div>
 
 						{/* Event Details Sidebar on the right */}
-						<div className="w-1/3">
+						<div className="w-full md:w-1/3">
 							<div className="w-full h-full">
 								{/* Sidebar Content */}
 								{selectedEvent ? (
@@ -172,7 +172,7 @@ export default function CalendarPage() {
 													className="bg-white border-border backdrop-blur-sm"
 												>
 													<CardHeader>
-														<div className="flex items-start justify-between gap-2">
+														<div className="flex items-start justify-between gap-2 overflow-hidden">
 															<CardTitle className="text-primary text-xl flex-1 min-w-0">
 																<span className="block truncate">
 																	{e.event_name}

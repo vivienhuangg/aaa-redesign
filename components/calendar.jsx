@@ -163,14 +163,14 @@ export function Calendar({
 		<div className={`bg-card text-card-foreground rounded-xl border w-full`}>
 			<div className="flex flex-row items-center justify-between px-6 py-4 gap-4">
 				<div className="flex items-center gap-4">
-					<h2 className="text-2xl font-semibold">
+					<h2 className="md:text-2xl font-semibold text-lg">
 						{MONTHS[currentDate.getMonth()]} {currentDate.getFullYear()}
 					</h2>
 					<Button
 						variant="outline"
 						size="sm"
 						onClick={goToToday}
-						className="text-sm bg-transparent hover:bg-accent"
+						className="hidden text-sm bg-transparent hover:bg-accent"
 					>
 						Today
 					</Button>
@@ -206,13 +206,15 @@ export function Calendar({
 
 			<div className="px-6 gap-4">
 				{/* Weekday headers */}
-				<div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
-					{WEEKDAYS.map((day, index) => (
+				<div className="grid grid-cols-7 gap-0 w-full">
+					{WEEKDAYS.map((day, idx) => (
 						<div
 							key={day}
-							className={`text-accent-foreground bg-accent p-4 text-center text-sm font-semibold border ${
-								index === 0 ? "border-l" : ""
-							} ${index === 6 ? "border-r" : ""}`}
+							className={`
+										text-accent-foreground bg-accent py-4 text-center text-sm font-semibold border
+									${idx === 0 ? "border-l" : ""}
+									${idx === 6 ? "border-r" : ""}
+									`}
 						>
 							{day}
 						</div>
@@ -238,14 +240,14 @@ export function Calendar({
 								<div
 									key={index}
 									className={`
-                h-28 p-3 border-r border-t border-border
-                ${isFirstColumn ? "border-l" : ""}
-                ${isLastColumn ? "border-r" : ""}
-                ${!dayData.isCurrentMonth ? "bg-muted/50 text-muted-foreground" : "bg-background"}
-                ${isCurrentDay && highlightToday ? "bg-accent/10" : ""}
-                ${isDisabledDay ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-muted/50"}
-                transition-colors
-              `}
+										h-28 p-3 border-r border-t border-border
+										${isFirstColumn ? "border-l" : ""}
+										${isLastColumn ? "border-r" : ""}
+										${!dayData.isCurrentMonth ? "bg-muted/50 text-muted-foreground" : "bg-background"}
+										${isCurrentDay && highlightToday ? "bg-accent/10" : ""}
+										${isDisabledDay ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-muted/50"}
+										transition-colors
+									`}
 									role="button"
 									tabIndex={0}
 									onClick={() => {
@@ -265,8 +267,8 @@ export function Calendar({
 									<div className="flex items-center justify-between">
 										<span
 											className={`
-                text-base font-semibold
-                ${isCurrentDay && highlightToday ? "bg-accent text-accent-foreground rounded-full w-7 h-7 flex items-center justify-center shadow-sm" : ""}
+												text-base font-semibold
+												${isCurrentDay && highlightToday ? "bg-accent text-accent-foreground rounded-full w-7 h-7 flex items-center justify-center shadow-sm" : ""}
               `}
 										>
 											{dayData.date.getDate()}
@@ -274,38 +276,28 @@ export function Calendar({
 									</div>
 
 									{/* Events */}
-									<div className="space-y-1">
+									<div className="flex-1 flex flex-col justify-evenly overflow-hidden">
 										{dayEvents.slice(0, 3).map((event) => (
 											<div
 												key={event.id}
-												className={`
-                text-xs p-1.5 rounded cursor-pointer font-medium
-                text-foreground
-                hover:opacity-80 transition-opacity
-              `}
-												role="button"
-												tabIndex={0}
+												className="flex-1 md:text-xs text-2xs p-1 rounded font-medium
+                   text-foreground hover:opacity-80 transition-opacity
+                   overflow-hidden whitespace-normal break-words break-all truncate"
+												title={event.description || event.title}
 												onClick={(e) => {
 													e.stopPropagation();
-													if (onEventClick) {
-														onEventClick(event);
-													}
+													onEventClick?.(event);
 												}}
-												onKeyDown={(e) => {
-													if (e.key === "Enter" || e.key === " ") {
-														e.stopPropagation();
-														if (onEventClick) {
-															onEventClick(event);
-														}
-													}
-												}}
-												title={event.description || event.title}
 											>
 												{event.title}
 											</div>
 										))}
 										{dayEvents.length > 3 && (
-											<div className="text-xs text-muted-foreground font-medium">
+											<div
+												className="flex-1 text-xs p-1 font-medium
+                      text-muted-foreground
+                      overflow-hidden whitespace-nowrap truncate"
+											>
 												+{dayEvents.length - 3} more
 											</div>
 										)}

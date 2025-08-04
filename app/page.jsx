@@ -40,18 +40,16 @@ export default function HomePage() {
 
 	return (
 		<div className="min-h-screen bg-background relative">
-			{/* NavBar overlaying hero image, scrolls away with page */}
 			<NavBar />
-
 			<HeroImage />
 
-			<div className="flex flex-col gap-16 mx-auto p-12 px-36">
+			<div className="flex flex-col gap-8 md:gap-16 mx-auto p-4 md:p-12 container">
 				{/* Quick welcome and tidbit about AAA */}
 				<div className="mx-auto px-4 gap-4 flex flex-col items-center">
-					<h2 className="text-4xl font-bold text-center text-accent">
+					<h2 className="text-3xl md:text-4xl font-bold text-center text-accent">
 						Welcome to AAA!
 					</h2>
-					<div className="font-bold text-center text-xl text-foreground leading-relaxed">
+					<div className="font-bold text-center text-lg md:text-xl text-foreground leading-relaxed">
 						We are MIT's Asian American Association (AAA)! From our events like
 						Nightmarket, Grains of Rice spring banquet, and study breaks to bake
 						sales and fundraisers, we work to celebrate Asian culture amongst
@@ -62,15 +60,15 @@ export default function HomePage() {
 				</div>
 
 				{/* Calendar Section */}
-				<div className=" mx-auto w-full px-4">
+				<div className="mx-auto w-full px-2 md:px-4">
 					<Card className="w-full mx-auto">
 						<CardHeader>
-							<CardTitle className="text-4xl font-bold text-center">
+							<CardTitle className="text-2xl md:text-4xl font-bold text-center">
 								Upcoming Events
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="grid md:grid-cols-2 gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{upcomingEvents.length > 0 ? (
 									upcomingEvents.map((event) => (
 										<Card
@@ -79,7 +77,7 @@ export default function HomePage() {
 										>
 											<CardHeader>
 												<div className="flex items-start justify-between gap-2">
-													<CardTitle className="text-primary text-xl flex-1 min-w-0">
+													<CardTitle className="text-primary text-lg md:text-xl flex-1 min-w-0">
 														<span className="block truncate">
 															{event.event_name}
 														</span>
@@ -145,7 +143,7 @@ export default function HomePage() {
 										</Card>
 									))
 								) : (
-									<div className="col-span-2 text-center py-8">
+									<div className="col-span-1 md:col-span-2 text-center py-8">
 										<p className="text-muted-foreground">
 											No upcoming events scheduled.
 										</p>
@@ -155,9 +153,9 @@ export default function HomePage() {
 									</div>
 								)}
 							</div>
-							<div className="text-center mt-8">
+							<div className="text-center mt-6 md:mt-8">
 								<Link href="/calendar">
-									<Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-3">
+									<Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-6 md:px-8 py-2 md:py-3 text-sm md:text-base">
 										View Full Calendar
 									</Button>
 								</Link>

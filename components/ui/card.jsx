@@ -65,7 +65,12 @@ function ExecCard({ position, photo, people, className, ...props }) {
 			<div className="bg-background text-card-foreground rounded-xl border-2 border-accent transition-all duration-300">
 				<div className="flex items-stretch gap-4 p-4">
 					{/* Image container drives height */}
-					<div className="w-1/3 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+					<div
+						className={cn(
+							"rounded-lg overflow-hidden bg-muted flex-shrink-0",
+							position === "Spring Reps" ? "w-1/2" : "w-1/3",
+						)}
+					>
 						<img
 							src={photo}
 							alt={position}
@@ -76,12 +81,12 @@ function ExecCard({ position, photo, people, className, ...props }) {
 					{/* Right side matches image height */}
 					<div className="flex-1 flex flex-col h-full min-w-0">
 						<h2
-							className="font-bold text-accent mb-3"
+							className="font-bold text-accent mb-2"
 							style={{
 								fontSize:
-									position === "Spring Reps"
-										? "clamp(0.25rem, 1.1vw, 1.2rem)"
-										: "clamp(0.3rem, 1.5vw, 1.5vw)",
+									// position === "Spring Reps"
+									// 	? "clamp(0.25rem, 1.1vw, 1.2rem)"
+									"clamp(0.3rem, 1.5vw, 1.5vw)",
 							}}
 						>
 							{position}
@@ -90,56 +95,56 @@ function ExecCard({ position, photo, people, className, ...props }) {
 						<div
 							className={cn(
 								"grid gap-4 flex-1",
-								people.length === 1 ? "grid-rows-1" : "grid-rows-2",
-								people.length > 2 ? "grid-cols-3" : "",
+								people.length === 2 ? "grid-rows-2" : "grid-rows-1",
+								people.length > 2 ? "gap-2" : "",
 							)}
 						>
 							{people.map(
 								({ name, class: year, major, involved_in, fav_memory }) => (
 									<div
-										key={name}
-										className="flex flex-col justify-between h-full"
+										className={cn(
+											"flex flex-col gap-2 h-full",
+											people.length > 2 ? "gap-0" : "",
+										)}
 									>
-										<div className="flex flex-col gap-1 h-full">
-											<h3
-												className="font-bold text-black"
+										<h3
+											className="font-bold text-black"
+											style={{
+												fontSize:
+													// position === "Spring Reps"
+													// 	? "clamp(0.18rem, 0.95vw, 1.1rem)"
+													"clamp(0.26rem, 1.25vw, 1.25vw)",
+											}}
+										>
+											{name} (&apos;{year})
+										</h3>
+										{major && (
+											<p
+												className="text-accent font-serif font-bold leading-tight"
 												style={{
 													fontSize:
-														position === "Spring Reps"
-															? "clamp(0.18rem, 0.95vw, 1.1rem)"
-															: "clamp(0.26rem, 1.25vw, 1.25vw)",
+														// position === "Spring Reps"
+														// 	? "clamp(0.16rem, 0.85vw, 1rem)"
+														"clamp(0.22rem, 1.05vw, 1.05vw)",
 												}}
 											>
-												{name} (&apos;{year})
-											</h3>
-											{major && (
-												<p
-													className="text-accent font-serif font-bold leading-tight"
-													style={{
-														fontSize:
-															position === "Spring Reps"
-																? "clamp(0.16rem, 0.85vw, 1rem)"
-																: "clamp(0.22rem, 1.05vw, 1.05vw)",
-													}}
-												>
-													{major} | {involved_in}
-												</p>
-											)}
-											{fav_memory && (
-												<p
-													className="text-black font-serif text-justify leading-tight flex-1"
-													style={{
-														fontSize:
-															position === "Spring Reps"
-																? "clamp(0.16rem, 0.85vw, 1rem)"
-																: "clamp(0.22rem, 1.05vw, 1.05vw)",
-													}}
-												>
-													<b>Favorite Memory:</b>{" "}
-													<i>&ldquo;{fav_memory}&rdquo;</i>
-												</p>
-											)}
-										</div>
+												{major} | {involved_in}
+											</p>
+										)}
+										{fav_memory && (
+											<p
+												className="text-black font-serif text-justify leading-tight flex-1"
+												style={{
+													fontSize:
+														// position === "Spring Reps"
+														// 	? "clamp(0.16rem, 0.85vw, 1rem)"
+														"clamp(0.22rem, 1.05vw, 1.05vw)",
+												}}
+											>
+												<b>Favorite Memory:</b>{" "}
+												<i>&ldquo;{fav_memory}&rdquo;</i>
+											</p>
+										)}
 									</div>
 								),
 							)}

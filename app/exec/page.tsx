@@ -118,9 +118,10 @@ export default function ExecPage() {
 				{
 					name: "Audrey Oh",
 					class: "27",
-					major: "",
-					involved_in: "",
-					fav_memory: "",
+					major: "Finance (15-3)",
+					involved_in:
+						"Women's Field Hockey, UROP, Kappa Alpha Theta, MISTI GTL",
+					fav_memory: "Post Grains of Rice Berryline :P",
 				},
 				{
 					name: "Ashley Huang",
@@ -178,9 +179,9 @@ export default function ExecPage() {
 				{
 					name: "Hyunsu Price",
 					class: "26",
-					major: "",
-					involved_in: "",
-					fav_memory: "",
+					major: "Artificial Intelligence and Decision Making (6-4)",
+					involved_in: "Men's Squash, Phi Delta Theta",
+					fav_memory: "internal bonding trips to chinatown for dim sum",
 				},
 			],
 		},
@@ -192,7 +193,8 @@ export default function ExecPage() {
 					name: "Anthony Koh",
 					class: "28",
 					major: "Civil and Environmental Engineering (1)",
-					involved_in: "Men's Swimming & Diving, Club Golf, MIT Wind Ensemble",
+					involved_in:
+						"Men's Swimming & Diving, Club Golf, MIT Wind, Phi Sigma Kappa",
 					fav_memory:
 						"Cooking and prepping for our annual Grains of Rice banquet.",
 				},
@@ -223,9 +225,9 @@ export default function ExecPage() {
 				{
 					name: "Rebecca Xiong",
 					class: "28",
-					major: "",
-					involved_in: "",
-					fav_memory: "",
+					major: "Computer Science and Engineering (6-3)",
+					involved_in: "Kappa Alpha Theta",
+					fav_memory: "AAA retreat so fun to get to know everyone",
 				},
 			],
 		},

@@ -32,7 +32,10 @@
 		"components/AdminPanel/AdminPanel.jsx",
 		"app/page.jsx",
 		"app/layout.jsx",
-		"components/event-uploader.jsx"
+		"components/event-uploader.jsx",
+		"components/ui/toast.jsx",
+		"components/ui/card.jsx",
+		"app/contact/page.jsx"
 	],
 	"exclude": ["node_modules"]
 }

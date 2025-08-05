@@ -35,7 +35,9 @@
 		"components/event-uploader.jsx",
 		"components/ui/toast.jsx",
 		"components/ui/card.jsx",
-		"app/contact/page.jsx"
+		"app/contact/page.jsx",
+		"components/NavBar/NavBar.jsx",
+		"components/ui/separator.jsx"
 	],
 	"exclude": ["node_modules"]
 }

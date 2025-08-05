@@ -211,7 +211,7 @@ export default function ExecPage() {
 					class: "28",
 					major: "Computer Science and Engineering (6-3)",
 					involved_in: "Kappa Alpha Theta",
-					fav_memory: "AAA retreat so fun to get to know everyone",
+					fav_memory: "Cooking and MCing for Grains of Rice!",
 				},
 				{
 					name: "Shaunuk Joshi",

@@ -30,26 +30,24 @@ export default function RootLayout({ children }) {
 					{children}
 				</div>
 				<footer className="border-t bg-white/80 backdrop-blur">
-					<div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-xs text-gray-600 sm:flex-row sm:items-center sm:justify-between">
-						<p className="leading-snug">
+					<div className="mx-auto grid max-w-6xl grid-cols-1 gap-2 px-4 py-4 text-xs text-gray-600 sm:grid-cols-3 sm:items-center">
+						<a
+							href="mailto:aaa-exec@mit.edu"
+							className="hover:text-gray-900 underline-offset-2 hover:underline order-2 sm:order-1"
+						>
+							aaa-exec@mit.edu
+						</a>
+						<p className="leading-snug order-1 sm:order-2 text-center">
 							© {new Date().getFullYear()} Massachusetts Institute of Technology
 						</p>
-						<div className="flex flex-wrap items-center gap-4">
-							<a
-								href="mailto:accessibility@mit.edu"
-								className="hover:text-gray-900 underline-offset-2 hover:underline"
-							>
-								accessibility@mit.edu
-							</a>
-							<a
-								href="https://accessibility.mit.edu/"
-								target="_blank"
-								rel="noreferrer"
-								className="hover:text-gray-900 underline-offset-2 hover:underline"
-							>
-								Accessibility
-							</a>
-						</div>
+						<a
+							href="https://accessibility.mit.edu/"
+							target="_blank"
+							rel="noreferrer"
+							className="hover:text-gray-900 underline-offset-2 hover:underline order-3 text-right"
+						>
+							Accessibility
+						</a>
 					</div>
 				</footer>
 			</body>

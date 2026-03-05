@@ -25,20 +25,26 @@ export default function ContactPage() {
 		setSent(false);
 
 		try {
-			const res = await fetch("/api/contact", {
+			const formDataToSend = new FormData();
+			formDataToSend.append("name", formData.name);
+			formDataToSend.append("email", formData.email);
+			formDataToSend.append("subject", `[MIT AAA Website] ${formData.subject}`);
+			formDataToSend.append(
+				"message",
+				`<${formData.email}>\n\n${formData.message}`,
+			);
+			formDataToSend.append("_replyto", formData.email);
+
+			const res = await fetch("https://formspree.io/f/xnnbldja", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(formData),
+				body: formDataToSend,
+				mode: "no-cors", // Prevents CORS errors but can't read response
 			});
 
-			if (res.ok) {
-				setSent(true);
-				setFormData({ name: "", email: "", subject: "", message: "" });
-			} else {
-				alert(
-					"Sorry, there was a problem sending your message. Please try again later.",
-				);
-			}
+			// With no-cors mode, we can't check res.ok, so assume success
+			// Formspree will email you if there are issues
+			setSent(true);
+			setFormData({ name: "", email: "", subject: "", message: "" });
 
 			setIsSending(false);
 		} catch (err) {

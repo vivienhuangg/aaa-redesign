@@ -139,7 +139,10 @@ export function Calendar({
 
 	// Helper functions
 	const formatDateKey = (date) => {
-		return date.toISOString().split("T")[0];
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const day = String(date.getDate()).padStart(2, "0");
+		return `${year}-${month}-${day}`;
 	};
 
 	const isToday = (date) => {
@@ -282,7 +285,7 @@ export function Calendar({
 												key={event.id}
 												className="flex-1 md:text-xs text-2xs p-1 rounded font-medium
                    text-foreground hover:opacity-80 transition-opacity
-                   overflow-hidden whitespace-normal break-words break-all truncate"
+                   overflow-hidden whitespace-normal break-words"
 												title={event.description || event.title}
 												onClick={(e) => {
 													e.stopPropagation();

@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Toast } from "@/components/ui/toast";
 import { eventTypeColors, eventTypeLabels } from "@/data/events";
+import { supabase } from "@/lib/supabase";
 
 // Sample JSON shown in the helper card
 const sampleEventsJSON = `[
@@ -29,6 +30,8 @@ const sampleEventsJSON = `[
     "type": "election",
     "link": "https://forms.gle/1234567890",
     "link_display": "Submit your platform!"
+	"rsvp_link": "https://forms.gle/0987654321",
+    "rsvp_link_display": "RSVP here!"
   }
 ]`;
 
@@ -61,10 +64,13 @@ export default function AdminPanel() {
 		const fetchEvents = async () => {
 			setLoadingEvents(true);
 			try {
-				const res = await fetch("/api/events");
-				if (!res.ok) throw new Error("Failed to load events");
-				const data = await res.json();
-				setEvents(data);
+				const { data, error } = await supabase
+					.from("events")
+					.select("*")
+					.order("start_time", { ascending: true });
+
+				if (error) throw new Error(error.message);
+				setEvents(data || []);
 			} catch (err) {
 				console.error(err);
 				setToast({ message: err.message, type: "error" });
@@ -101,15 +107,13 @@ export default function AdminPanel() {
 		}
 
 		try {
-			const res = await fetch("/api/events", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(parsedEvents),
-			});
+			const { data, error } = await supabase
+				.from("events")
+				.insert(parsedEvents)
+				.select();
 
-			if (!res.ok) throw new Error("Failed to create events");
-			const created = await res.json();
-			setEvents((prev) => [...prev, ...created]);
+			if (error) throw new Error(error.message);
+			setEvents((prev) => [...prev, ...(data || [])]);
 			setToast({ message: "Events submitted successfully!", type: "success" });
 			setJsonInput("");
 		} catch (err) {
@@ -130,14 +134,15 @@ export default function AdminPanel() {
 
 	const saveEvent = async (event) => {
 		try {
-			const res = await fetch(`/api/events/${event.id}`, {
-				method: "PUT",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(event),
-			});
-			if (!res.ok) throw new Error("Failed to update event");
-			const updated = await res.json();
-			setEvents((prev) => prev.map((e) => (e.id === updated.id ? updated : e)));
+			const { data, error } = await supabase
+				.from("events")
+				.update(event)
+				.eq("id", event.id)
+				.select()
+				.single();
+
+			if (error) throw new Error(error.message);
+			setEvents((prev) => prev.map((e) => (e.id === data.id ? data : e)));
 			setToast({ message: "Event saved", type: "success" });
 		} catch (err) {
 			setToast({ message: err.message, type: "error" });
@@ -147,8 +152,9 @@ export default function AdminPanel() {
 	const deleteEvent = async (id) => {
 		if (!confirm("Are you sure you want to delete this event?")) return;
 		try {
-			const res = await fetch(`/api/events/${id}`, { method: "DELETE" });
-			if (!res.ok) throw new Error("Failed to delete event");
+			const { error } = await supabase.from("events").delete().eq("id", id);
+
+			if (error) throw new Error(error.message);
 			setEvents((prev) => prev.filter((e) => e.id !== id));
 			setToast({ message: "Event deleted", type: "success" });
 		} catch (err) {
@@ -358,12 +364,34 @@ export default function AdminPanel() {
 										</div>
 										<div className="md:col-span-2 space-y-2">
 											<label className="text-xs font-medium text-gray-600">
-												Link
+												Link Display
 											</label>
 											<Input
 												value={event.link_display || ""}
 												onChange={(e) =>
 													handleFieldChange(idx, "link_display", e.target.value)
+												}
+											/>
+										</div>
+										<div className="md:col-span-2 space-y-2">
+											<label className="text-xs font-medium text-gray-600">
+												RSVP Link
+											</label>
+											<Input
+												value={event.rsvp_link || ""}
+												onChange={(e) =>
+													handleFieldChange(idx, "rsvp_link", e.target.value)
+												}
+											/>
+										</div>
+										<div className="md:col-span-2 space-y-2">
+											<label className="text-xs font-medium text-gray-600">
+												RSVP Link Display
+											</label>
+											<Input
+												value={event.rsvp_link_display || ""}
+												onChange={(e) =>
+													handleFieldChange(idx, "rsvp_link_display", e.target.value)
 												}
 											/>
 										</div>

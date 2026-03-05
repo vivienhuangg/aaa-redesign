@@ -9,19 +9,26 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { eventTypeColors, eventTypeLabels } from "@/data/events";
+import { supabase } from "@/lib/supabase";
 
 export default function HomePage() {
 	const [allEvents, setAllEvents] = useState([]);
 
-	// Load events from API on component mount
+	// Load events from Supabase directly
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await fetch("/api/events");
-				if (response.ok) {
-					const data = await response.json();
-					setAllEvents(data);
+				const { data, error } = await supabase
+					.from("events")
+					.select("*")
+					.order("start_time", { ascending: true });
+
+				if (error) {
+					console.error("Error loading events:", error);
+					return;
 				}
+
+				setAllEvents(data || []);
 			} catch (error) {
 				console.error("Error loading events:", error);
 			}
@@ -78,7 +85,7 @@ export default function HomePage() {
 											<CardHeader>
 												<div className="flex items-start justify-between gap-2">
 													<CardTitle className="text-primary text-lg md:text-xl flex-1 min-w-0">
-														<span className="block truncate">
+														<span className="block break-words">
 															{event.event_name}
 														</span>
 													</CardTitle>
@@ -127,18 +134,33 @@ export default function HomePage() {
 												<p className="text-muted-foreground text-sm leading-relaxed break-words">
 													{event.description}
 												</p>
-												{event.link && (
-													<Link
-														href={event.link}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="w-full"
-													>
-														<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-															{event.link_display ?? "RSVP for Event"}
-														</Button>
-													</Link>
-												)}
+												<div className="flex items-center gap-2 min-w-0">
+													{event.link && (
+														<Link
+															href={event.link}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="w-full"
+														>
+															<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+																{event.link_display ?? "Link for Event"}
+															</Button>
+														</Link>
+													)}
+
+													{event.rsvp_link && (
+														<Link
+															href={event.rsvp_link}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="w-full"
+														>
+															<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+																{event.rsvp_link_display ?? "RSVP for Event"}
+															</Button>
+														</Link>
+													)}
+												</div>
 											</CardContent>
 										</Card>
 									))

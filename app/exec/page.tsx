@@ -63,9 +63,10 @@ export default function ExecPage() {
 				{
 					name: "Eunice Choi",
 					class: "26",
-					major: "",
-					involved_in: "",
-					fav_memory: "",
+					major: "Computer Science and Engineering (6-3)",
+					involved_in: "Women's Fencing, Code for Good",
+					fav_memory:
+						"baking for our bake sale! it's so fun baking with other exec members and it feels nice to brighten people's days with a sweet treat.",
 				},
 			],
 		},

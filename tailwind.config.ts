@@ -117,6 +117,7 @@ const config: Config = {
 				serif: ["var(--font-cardo)", "serif"],
 			},
 			fontSize: {
+				"2xs": ["0.625rem", { lineHeight: "1.15" }], // 10px
 				xs: ["0.75rem", { lineHeight: "1.15" }], // 12px
 				sm: ["0.875rem", { lineHeight: "1.25" }], // 14px
 				base: ["1rem", { lineHeight: "1.5" }], // 16px

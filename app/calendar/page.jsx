@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { eventTypeColors, eventTypeLabels } from "@/data/events";
+import { supabase } from "@/lib/supabase";
 
 export default function CalendarPage() {
 	const [currentDate, setCurrentDate] = useState(new Date()); // Current date
@@ -24,29 +25,39 @@ export default function CalendarPage() {
 			.slice(0, 3);
 	}, [apiEvents]);
 
-	// Fetch events from API on component mount
+	// Fetch events from Supabase directly
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await fetch("/api/events");
-				if (response.ok) {
-					const data = await response.json();
-					// Map API events to calendar-friendly structure
-					const mapped = data.map((e) => {
-						const dateStr = new Date(e.start_time).toISOString().split("T")[0];
-						const colorClasses =
-							eventTypeColors[e.type] || "bg-accent text-accent-foreground";
-						const [bgClass, textClass] = colorClasses.split(" ");
-						const borderClass = bgClass.replace("bg-", "border-");
-						return {
-							...e,
-							id: e.id ?? e.event_name,
-							title: e.event_name,
-							date: dateStr,
-						};
-					});
-					setApiEvents(mapped);
+				const { data, error } = await supabase
+					.from("events")
+					.select("*")
+					.order("start_time", { ascending: true });
+
+				if (error) {
+					console.error("Error fetching events:", error);
+					return;
 				}
+
+				// Map events to calendar-friendly structure
+				const mapped = (data || []).map((e) => {
+					const eventDate = new Date(e.start_time);
+					const year = eventDate.getFullYear();
+					const month = String(eventDate.getMonth() + 1).padStart(2, "0");
+					const day = String(eventDate.getDate()).padStart(2, "0");
+					const dateStr = `${year}-${month}-${day}`;
+					const colorClasses =
+						eventTypeColors[e.type] || "bg-accent text-accent-foreground";
+					const [bgClass, textClass] = colorClasses.split(" ");
+					const borderClass = bgClass.replace("bg-", "border-");
+					return {
+						...e,
+						id: e.id ?? e.event_name,
+						title: e.event_name,
+						date: dateStr,
+					};
+				});
+				setApiEvents(mapped);
 			} catch (error) {
 				console.error("Error fetching events:", error);
 			}
@@ -63,19 +74,22 @@ export default function CalendarPage() {
 				{/* Calendar Section */}
 				<div className="container mx-auto px-4">
 					<div className="text-center mb-12">
-						<h2 className="text-5xl font-bold text-primary mb-4">
+						<h2 className="md:text-5xl text-3xl font-bold text-primary mb-4">
 							c<span className="text-accent">AAA</span>lendar
 						</h2>
 					</div>
 
-					<div className="flex flex-row w-full gap-6">
+					<div className="flex md:flex-row flex-col w-full gap-6">
 						{/* Calendar on the left */}
-						<div className="w-2/3">
+						<div className="w-full md:w-2/3">
 							<div className="w-full h-full">
 								<Calendar
 									events={apiEvents}
 									onDateClick={(date) => {
-										const dateKey = new Date(date).toISOString().split("T")[0];
+										const year = date.getFullYear();
+										const month = String(date.getMonth() + 1).padStart(2, "0");
+										const day = String(date.getDate()).padStart(2, "0");
+										const dateKey = `${year}-${month}-${day}`;
 										const hasEvents = apiEvents.some((e) => e.date === dateKey);
 										if (!hasEvents) {
 											setSelectedEvent(null);
@@ -88,21 +102,21 @@ export default function CalendarPage() {
 						</div>
 
 						{/* Event Details Sidebar on the right */}
-						<div className="w-1/3">
+						<div className="w-full md:w-1/3">
 							<div className="w-full h-full">
 								{/* Sidebar Content */}
 								{selectedEvent ? (
 									<Card className="bg-white border-border backdrop-blur-sm">
 										<CardHeader>
-											<div className="flex items-start justify-between gap-2">
-												<CardTitle className="text-primary text-xl flex-1 min-w-0">
-													<span className="block truncate">
+											<div className="flex items-start justify-between gap-2 overflow-hidden">
+												<CardTitle className="text-primary text-xl flex-1 min-w-0 flex-wrap overflow-wrap">
+													<span className="block break-words">
 														{selectedEvent.event_name}
 													</span>
 												</CardTitle>
 												<Badge
 													variant="outline"
-													className={`border-0 ${eventTypeColors[selectedEvent.type]} flex-shrink-0`}
+													className={`border-0 ${eventTypeColors[selectedEvent.type]} flex-shrink-0 block truncate`}
 												>
 													{eventTypeLabels[selectedEvent.type]}
 												</Badge>
@@ -145,18 +159,35 @@ export default function CalendarPage() {
 											<p className="text-muted-foreground text-sm leading-relaxed break-words">
 												{selectedEvent.description}
 											</p>
-											{selectedEvent.link && (
-												<Link
-													href={selectedEvent.link}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="w-full"
-												>
-													<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-														{selectedEvent.link_display ?? "RSVP for Event"}
-													</Button>
-												</Link>
-											)}
+
+											<div className="flex items-center gap-2 min-w-0">
+												{selectedEvent.link && (
+													<Link
+														href={selectedEvent.link}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="w-full"
+													>
+														<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+															{selectedEvent.link_display ?? "Link for Event"}
+														</Button>
+													</Link>
+												)}
+
+												{selectedEvent.rsvp_link && (
+													<Link
+														href={selectedEvent.rsvp_link}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="w-full"
+													>
+														<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+															{selectedEvent.rsvp_link_display ??
+																"RSVP for Event"}
+														</Button>
+													</Link>
+												)}
+											</div>
 										</CardContent>
 									</Card>
 								) : (
@@ -172,9 +203,9 @@ export default function CalendarPage() {
 													className="bg-white border-border backdrop-blur-sm"
 												>
 													<CardHeader>
-														<div className="flex items-start justify-between gap-2">
+														<div className="flex items-start justify-between gap-2 overflow-hidden">
 															<CardTitle className="text-primary text-xl flex-1 min-w-0">
-																<span className="block truncate">
+																<span className="block break-words">
 																	{e.event_name}
 																</span>
 															</CardTitle>
@@ -223,18 +254,33 @@ export default function CalendarPage() {
 														<p className="text-muted-foreground text-sm leading-relaxed break-words">
 															{e.description}
 														</p>
-														{e.link && (
-															<Link
-																href={e.link}
-																target="_blank"
-																rel="noopener noreferrer"
-																className="w-full"
-															>
-																<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-																	{e.link_display ?? "RSVP for Event"}
-																</Button>
-															</Link>
-														)}
+														<div className="flex items-center gap-2 min-w-0">
+															{e.link && (
+																<Link
+																	href={e.link}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	className="w-full"
+																>
+																	<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+																		{e.link_display ?? "Link for Event"}
+																	</Button>
+																</Link>
+															)}
+
+															{e.rsvp_link && (
+																<Link
+																	href={e.rsvp_link}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	className="w-full"
+																>
+																	<Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+																		{e.rsvp_link_display ?? "RSVP for Event"}
+																	</Button>
+																</Link>
+															)}
+														</div>
 													</CardContent>
 												</Card>
 											))

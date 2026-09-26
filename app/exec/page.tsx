@@ -64,8 +64,6 @@ const profiles = {
 	"Alicia Ji": {
 		class: "27",
 		photo: "/images/exec/alicia_ji.jpg",
-		photo_position: "50% 30%",
-		photo_scale: 1.15,
 		major: "Artificial Intelligence and Decision Making (6-4)",
 		involved_in: "Sigma Kappa, MINCE, Baker Foundation",
 		fav_memory: "Organizing & cooking for our annual Grains of Rice event!!",
@@ -73,8 +71,6 @@ const profiles = {
 	"Gyeongwu Kim (GK)": {
 		class: "27",
 		photo: "/images/exec/gyeongwu_kim.jpg",
-		photo_position: "38% 36%",
-		photo_scale: 1.45,
 		major: "Computer Science and Engineering (6-3)",
 		involved_in: "Football, Phi Beta Epsilon",
 		fav_memory: "Nightmaaarket",

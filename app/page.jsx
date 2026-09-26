@@ -2,40 +2,24 @@
 
 import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import HeroImage from "@/components/HomePage/HeroImage";
 import NavBar from "@/components/NavBar/NavBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { eventTypeColors, eventTypeLabels } from "@/data/events";
+import calendarEvents from "@/data/calendar-events.json";
+import {
+	eventTypeColors,
+	eventTypeLabels,
+	formatEventDate,
+	formatEventTime,
+	getEventStart,
+} from "@/data/events";
 
 export default function HomePage() {
-	const [allEvents, setAllEvents] = useState([]);
-
-	// Load events from API on component mount
-	useEffect(() => {
-		const fetchEvents = async () => {
-			try {
-				const response = await fetch("/api/events");
-				if (response.ok) {
-					const data = await response.json();
-					setAllEvents(data);
-				}
-			} catch (error) {
-				console.error("Error loading events:", error);
-			}
-		};
-
-		fetchEvents();
-	}, []);
-
-	const upcomingEvents = allEvents
-		.filter((event) => new Date(event.start_time) >= new Date())
-		.sort(
-			(a, b) =>
-				new Date(a.start_time).getTime() - new Date(b.start_time).getTime(),
-		)
+	const upcomingEvents = calendarEvents
+		.filter((event) => getEventStart(event) >= new Date())
+		.sort((a, b) => getEventStart(a).getTime() - getEventStart(b).getTime())
 		.slice(0, 4);
 
 	return (
@@ -97,38 +81,27 @@ export default function HomePage() {
 													<div className="flex items-center gap-2 min-w-0">
 														<CalendarIcon className="w-4 h-4 flex-shrink-0" />
 														<span className="truncate">
-															{new Date(event.start_time).toLocaleDateString(
-																"en-US",
-																{
-																	weekday: "long",
-																	year: "numeric",
-																	month: "long",
-																	day: "numeric",
-																},
-															)}
-														</span>
-													</div>
-													<div className="flex items-center gap-2 min-w-0">
-														<Clock className="w-4 h-4 flex-shrink-0" />
-														<span className="truncate">
-															{new Date(event.start_time).toLocaleTimeString(
-																"en-US",
-																{
-																	hour: "numeric",
-																	minute: "2-digit",
-																	hour12: true,
-																},
-															)}
-														</span>
-													</div>
-													<div className="flex items-center gap-2 min-w-0">
-														<MapPin className="w-4 h-4 flex-shrink-0" />
-														<span className="truncate">{event.location}</span>
-													</div>
+													{formatEventDate(event.date)}
+												</span>
+											</div>
+											{formatEventTime(event) && (
+												<div className="flex items-center gap-2 min-w-0">
+													<Clock className="w-4 h-4 flex-shrink-0" />
+													<span className="truncate">{formatEventTime(event)}</span>
 												</div>
-												<p className="text-muted-foreground text-sm leading-relaxed break-words">
-													{event.description}
-												</p>
+											)}
+											{event.location && (
+												<div className="flex items-center gap-2 min-w-0">
+													<MapPin className="w-4 h-4 flex-shrink-0" />
+													<span className="truncate">{event.location}</span>
+												</div>
+											)}
+										</div>
+										{event.description && (
+											<p className="text-muted-foreground text-sm leading-relaxed break-words">
+												{event.description}
+											</p>
+										)}
 												{event.link && (
 													<Link
 														href={event.link}

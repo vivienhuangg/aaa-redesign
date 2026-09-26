@@ -1,0 +1,26 @@
+[
+	{
+		"id": "frep-study-break-2026-10-06",
+		"event_name": "FREP Study Break",
+		"date": "2026-10-06",
+		"start_time": "21:00",
+		"end_time": "22:00",
+		"location": "Baker D",
+		"type": "study-break"
+	},
+	{
+		"id": "club-peru-collab-2026-10-14",
+		"event_name": "Club Peru Collab",
+		"date": "2026-10-14",
+		"start_time": "20:00",
+		"end_time": "22:00",
+		"location": "BC Porter Room",
+		"type": "cultural"
+	},
+	{
+		"id": "nightmarket-2026-11-13",
+		"event_name": "Nightmarket!",
+		"date": "2026-11-13",
+		"type": "major-event"
+	}
+]

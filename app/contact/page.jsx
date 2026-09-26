@@ -1,184 +1,123 @@
 "use client";
 
-import { Instagram } from "lucide-react";
+import { Check, Instagram, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import NavBar from "@/components/NavBar/NavBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+
+const MEMBERSHIP_FORM = "https://forms.gle/FZeehoTE2WP3o5yR9";
+
 export default function ContactPage() {
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		subject: "",
-		message: "",
-	});
-	const [isSending, setIsSending] = useState(false);
-	const [sent, setSent] = useState(false);
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		setIsSending(true);
-		setSent(false);
-
-		try {
-			const res = await fetch("/api/contact", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(formData),
-			});
-
-			if (res.ok) {
-				setSent(true);
-				setFormData({ name: "", email: "", subject: "", message: "" });
-			} else {
-				alert(
-					"Sorry, there was a problem sending your message. Please try again later.",
-				);
-			}
-
-			setIsSending(false);
-		} catch (err) {
-			console.error("Contact form error:", err);
-			alert(
-				"Sorry, there was a problem sending your message. Please try again later.",
-			);
-			setIsSending(false);
-		}
-	};
-
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-warm-white via-soft-cream to-warm-gray-100">
-			{/* Header */}
-			<NavBar></NavBar>
+		<div className="min-h-screen bg-background">
+			<NavBar />
 
-			{/* Contact Section */}
-			<section className="py-20">
-				<div className="container mx-auto px-4">
-					<div className="text-center mb-16">
-						<h2 className="text-5xl font-bold text-warm-gray-800 mb-4">
-							Contact & Join Us
-						</h2>
-						<p className="text-xl text-warm-gray-700 max-w-3xl mx-auto">
-							Join the fAAAm!
-						</p>
-					</div>
+			<section className="py-24">
+				<div className="container mx-auto px-4 sm:px-6">
+					<Card className="mx-auto mb-10 max-w-4xl border-border bg-card">
+						<CardHeader className="text-center">
+							<CardTitle className="text-3xl sm:text-4xl">
+								General membership
+							</CardTitle>
+						</CardHeader>
+						<CardContent className="flex flex-col items-center gap-8">
+							<ul className="w-full max-w-2xl space-y-4">
+								{[
+									"Free entrance to all future AAA study breaks🍵🐾",
+									"A discounted ticket to our Nightmarket event in November🍚",
+									"Access to external collaboration events with other clubs",
+									"Finals care packages 🍪🥐🍰",
+								].map((perk) => (
+									<li key={perk} className="flex items-start gap-3">
+										<Check className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+										<p className="text-lg leading-snug text-foreground">
+											{perk}
+										</p>
+									</li>
+								))}
+							</ul>
+							<Button
+								asChild
+								className="h-14 rounded-full bg-accent px-10 text-lg font-semibold text-accent-foreground hover:bg-accent/90"
+							>
+								<Link
+									href={MEMBERSHIP_FORM}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Sign up for general membership
+								</Link>
+							</Button>
+						</CardContent>
+					</Card>
 
-					<div className="flex gap-12">
-						<div className="w-1/2 flex flex-col gap-4">
-							<Card className=" bg-warm-white/90 border-accent ">
-								<CardHeader className="flex flex-col items-center">
-									<CardTitle className="text-2xl text-center">
-										Join the Mailing List
-									</CardTitle>
-									<p className="text-warm-gray-600 text-center">
-										Stay updated on all our events and announcements!
-									</p>
-								</CardHeader>
-								<CardContent className="flex flex-col items-center">
+					<div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
+						<Card className="border-border bg-card">
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2 text-2xl">
+									<Mail className="h-5 w-5 text-accent" />
+									Mailing list
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<Button
+									asChild
+									variant="outline"
+									className="rounded-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+								>
 									<Link
-										className="rounded-lg p-2 px-4 bg-accent hover:bg-accent/90 text-accent-foreground"
 										href="https://mailman.mit.edu/mailman/listinfo/aaa-announce"
+										target="_blank"
+										rel="noopener noreferrer"
 									>
-										mailman.mit.edu
+										Join aaa-announce
 									</Link>
-								</CardContent>
-							</Card>
-							{/* Social Media Links */}
-							<Card className=" bg-warm-white/90 border-accent ">
-								<CardHeader className="flex flex-col items-center">
-									<CardTitle className=" text-2xl text-center">
-										Follow Us on Social Media
-									</CardTitle>
-								</CardHeader>
-								<CardContent className="flex flex-row items-center">
+								</Button>
+							</CardContent>
+						</Card>
+
+						<Card className="border-border bg-card">
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2 text-2xl">
+									<Instagram className="h-5 w-5 text-accent" />
+									Instagram
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<Button
+									asChild
+									variant="outline"
+									className="rounded-full border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+								>
 									<Link
-										className="rounded-lg p-2 hover:text-accent flex flex-row items-center gap-2"
 										href="http://instagram.com/asiansatmit/"
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<Instagram className="w-8 h-8" />
-										<p className="text-warm-gray-600 text-center">
-											@asiansatmit
-										</p>
+										@asiansatmit
 									</Link>
-								</CardContent>
-							</Card>
-						</div>
-						{/* Mailing List Form */}
-
-						{/* Get in Touch Form */}
-						<Card className="bg-warm-white/90 border-accent">
-							<CardHeader className="flex flex-col items-center">
-								<CardTitle className="text-warm-gray-800 text-2xl text-center">
-									Get in Touch
-								</CardTitle>
-								<p className="text-warm-gray-600 text-center">
-									Have questions about what we do? Interested in sponsoring?
-									We&apos;d love to hear from you!
-								</p>
-							</CardHeader>
-							<CardContent className="flex flex-col items-center">
-								<form
-									onSubmit={handleSubmit}
-									className="space-y-4 flex flex-col items-center w-full"
-								>
-									<Input
-										type="text"
-										placeholder="Your name"
-										value={formData.name}
-										onChange={(e) =>
-											setFormData({ ...formData, name: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Input
-										type="text"
-										placeholder="Subject"
-										value={formData.subject}
-										onChange={(e) =>
-											setFormData({ ...formData, subject: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Input
-										type="email"
-										placeholder="Your email"
-										value={formData.email}
-										onChange={(e) =>
-											setFormData({ ...formData, email: e.target.value })
-										}
-										required
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-									<Textarea
-										placeholder="Your message"
-										value={formData.message}
-										onChange={(e) =>
-											setFormData({ ...formData, message: e.target.value })
-										}
-										required
-										rows={4}
-										className="bg-warm-gray-50 border-warm-gray-200 text-warm-gray-800 placeholder:text-warm-gray-500"
-									/>
-
-									<Button
-										type="submit"
-										disabled={isSending}
-										className="px-4 py-2 text-center bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-									>
-										{isSending ? "Sending…" : sent ? "Sent!" : "Send Message"}
-									</Button>
-								</form>
+								</Button>
 							</CardContent>
 						</Card>
 					</div>
+
+					<Card className="mx-auto mt-5 max-w-4xl border-border bg-card">
+						<CardHeader className="text-center">
+							<CardTitle className="text-2xl">Questions?</CardTitle>
+						</CardHeader>
+						<CardContent className="text-center">
+							<p className="mb-4 text-muted-foreground">
+								Reach out with any questions at
+							</p>
+							<Link
+								href="mailto:aaa-exec@mit.edu"
+								className="text-lg font-semibold text-accent hover:underline"
+							>
+								aaa-exec@mit.edu
+							</Link>
+						</CardContent>
+					</Card>
 				</div>
 			</section>
 		</div>

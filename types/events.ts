@@ -15,21 +15,3 @@ export interface CalendarEvent {
 		| "workshop";
 	attendees?: number;
 }
-
-export interface SupabaseEvent {
-	id?: string;
-	title: string;
-	date: string;
-	time?: string;
-	location?: string;
-	description?: string;
-	type?:
-		| "study-break"
-		| "major-event"
-		| "cultural"
-		| "social"
-		| "election"
-		| "workshop";
-	attendees?: number;
-	created_at?: string;
-}

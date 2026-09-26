@@ -1,58 +1,36 @@
 "use client";
 
-import { CalendarIcon, Clock, MapPin, Users } from "lucide-react";
+import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Calendar } from "@/components/calendar";
 import NavBar from "@/components/NavBar/NavBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { eventTypeColors, eventTypeLabels } from "@/data/events";
+import staticEvents from "@/data/calendar-events.json";
+import {
+	eventTypeColors,
+	eventTypeLabels,
+	formatEventDate,
+	formatEventTime,
+	getEventStart,
+} from "@/data/events";
+
+const events = staticEvents.map((event) => ({
+	...event,
+	title: event.event_name,
+}));
 
 export default function CalendarPage() {
-	const [currentDate, setCurrentDate] = useState(new Date()); // Current date
 	const [selectedEvent, setSelectedEvent] = useState(null);
-	const [view, setView] = useState("month");
-	const [apiEvents, setApiEvents] = useState([]);
 
 	const upcomingEvents = useMemo(() => {
 		const now = new Date();
-		return [...apiEvents]
-			.filter((e) => new Date(e.start_time) > now)
-			.sort((a, b) => new Date(a.start_time) - new Date(b.start_time))
+		return [...events]
+			.filter((event) => getEventStart(event) > now)
+			.sort((a, b) => getEventStart(a) - getEventStart(b))
 			.slice(0, 3);
-	}, [apiEvents]);
-
-	// Fetch events from API on component mount
-	useEffect(() => {
-		const fetchEvents = async () => {
-			try {
-				const response = await fetch("/api/events");
-				if (response.ok) {
-					const data = await response.json();
-					// Map API events to calendar-friendly structure
-					const mapped = data.map((e) => {
-						const dateStr = new Date(e.start_time).toISOString().split("T")[0];
-						const colorClasses =
-							eventTypeColors[e.type] || "bg-accent text-accent-foreground";
-						const [bgClass, textClass] = colorClasses.split(" ");
-						const borderClass = bgClass.replace("bg-", "border-");
-						return {
-							...e,
-							id: e.id ?? e.event_name,
-							title: e.event_name,
-							date: dateStr,
-						};
-					});
-					setApiEvents(mapped);
-				}
-			} catch (error) {
-				console.error("Error fetching events:", error);
-			}
-		};
-
-		fetchEvents();
 	}, []);
 
 	return (
@@ -73,10 +51,10 @@ export default function CalendarPage() {
 						<div className="w-2/3">
 							<div className="w-full h-full">
 								<Calendar
-									events={apiEvents}
+									events={events}
 									onDateClick={(date) => {
 										const dateKey = new Date(date).toISOString().split("T")[0];
-										const hasEvents = apiEvents.some((e) => e.date === dateKey);
+										const hasEvents = events.some((e) => e.date === dateKey);
 										if (!hasEvents) {
 											setSelectedEvent(null);
 										}
@@ -111,40 +89,33 @@ export default function CalendarPage() {
 										<CardContent className="space-y-4">
 											<div className="space-y-3 text-muted-foreground">
 												<div className="flex items-center gap-2 min-w-0">
-													<CalendarIcon className="w-4 h-4 flex-shrink-0" />
-													<span className="truncate">
-														{new Date(
-															selectedEvent.start_time,
-														).toLocaleDateString("en-US", {
-															weekday: "long",
-															year: "numeric",
-															month: "long",
-															day: "numeric",
-														})}
-													</span>
-												</div>
-												<div className="flex items-center gap-2 min-w-0">
-													<Clock className="w-4 h-4 flex-shrink-0" />
-													<span className="truncate">
-														{new Date(
-															selectedEvent.start_time,
-														).toLocaleTimeString("en-US", {
-															hour: "numeric",
-															minute: "2-digit",
-															hour12: true,
-														})}
-													</span>
-												</div>
-												<div className="flex items-center gap-2 min-w-0">
-													<MapPin className="w-4 h-4 flex-shrink-0" />
-													<span className="truncate">
-														{selectedEvent.location}
-													</span>
-												</div>
+											<CalendarIcon className="w-4 h-4 flex-shrink-0" />
+											<span className="truncate">
+												{formatEventDate(selectedEvent.date)}
+											</span>
+										</div>
+										{formatEventTime(selectedEvent) && (
+											<div className="flex items-center gap-2 min-w-0">
+												<Clock className="w-4 h-4 flex-shrink-0" />
+												<span className="truncate">
+													{formatEventTime(selectedEvent)}
+												</span>
 											</div>
-											<p className="text-muted-foreground text-sm leading-relaxed break-words">
-												{selectedEvent.description}
-											</p>
+										)}
+										{selectedEvent.location && (
+											<div className="flex items-center gap-2 min-w-0">
+												<MapPin className="w-4 h-4 flex-shrink-0" />
+												<span className="truncate">
+													{selectedEvent.location}
+												</span>
+											</div>
+										)}
+									</div>
+									{selectedEvent.description && (
+										<p className="text-muted-foreground text-sm leading-relaxed break-words">
+											{selectedEvent.description}
+										</p>
+									)}
 											{selectedEvent.link && (
 												<Link
 													href={selectedEvent.link}
@@ -189,40 +160,29 @@ export default function CalendarPage() {
 													<CardContent className="space-y-4">
 														<div className="space-y-3 text-muted-foreground">
 															<div className="flex items-center gap-2 min-w-0">
-																<CalendarIcon className="w-4 h-4 flex-shrink-0" />
-																<span className="truncate">
-																	{new Date(e.start_time).toLocaleDateString(
-																		"en-US",
-																		{
-																			weekday: "long",
-																			year: "numeric",
-																			month: "long",
-																			day: "numeric",
-																		},
-																	)}
-																</span>
-															</div>
-															<div className="flex items-center gap-2 min-w-0">
-																<Clock className="w-4 h-4 flex-shrink-0" />
-																<span className="truncate">
-																	{new Date(e.start_time).toLocaleTimeString(
-																		"en-US",
-																		{
-																			hour: "numeric",
-																			minute: "2-digit",
-																			hour12: true,
-																		},
-																	)}
-																</span>
-															</div>
-															<div className="flex items-center gap-2 min-w-0">
-																<MapPin className="w-4 h-4 flex-shrink-0" />
-																<span className="truncate">{e.location}</span>
-															</div>
-														</div>
-														<p className="text-muted-foreground text-sm leading-relaxed break-words">
-															{e.description}
-														</p>
+													<CalendarIcon className="w-4 h-4 flex-shrink-0" />
+													<span className="truncate">
+														{formatEventDate(e.date)}
+													</span>
+												</div>
+												{formatEventTime(e) && (
+													<div className="flex items-center gap-2 min-w-0">
+														<Clock className="w-4 h-4 flex-shrink-0" />
+														<span className="truncate">{formatEventTime(e)}</span>
+													</div>
+												)}
+												{e.location && (
+													<div className="flex items-center gap-2 min-w-0">
+														<MapPin className="w-4 h-4 flex-shrink-0" />
+														<span className="truncate">{e.location}</span>
+													</div>
+												)}
+											</div>
+											{e.description && (
+												<p className="text-muted-foreground text-sm leading-relaxed break-words">
+													{e.description}
+												</p>
+											)}
 														{e.link && (
 															<Link
 																href={e.link}

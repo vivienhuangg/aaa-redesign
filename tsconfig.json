@@ -29,10 +29,9 @@
 		".next/types/**/*.ts",
 		"app/calendar/page.jsx",
 		"components/calendar.jsx",
-		"components/AdminPanel/AdminPanel.jsx",
 		"app/page.jsx",
 		"app/layout.jsx",
-		"components/event-uploader.jsx"
+		"data/calendar-events.json"
 	],
 	"exclude": ["node_modules"]
 }

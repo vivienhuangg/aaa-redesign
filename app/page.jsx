@@ -23,7 +23,7 @@ export default function HomePage() {
 		.slice(0, 4);
 
 	return (
-		<div className="min-h-screen bg-background relative">
+		<div className="bg-background relative">
 			{/* NavBar overlaying hero image, scrolls away with page */}
 			<NavBar />
 

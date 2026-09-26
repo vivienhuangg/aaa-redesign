@@ -3,7 +3,7 @@ import * as React from "react";
 
 export default function HeroImage() {
 	return (
-		<section className="relative w-full">
+		<section className="relative w-full pt-[4.25rem]">
 			<div className="relative">
 				<Image
 					src="/images/groupPhoto.jpg"

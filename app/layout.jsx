@@ -1,4 +1,5 @@
 import { Cardo, Montserrat } from "next/font/google";
+import Footer from "@/components/Footer/Footer";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -24,9 +25,10 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body
 				suppressHydrationWarning={true}
-				className={`${montserrat.variable} ${cardo.variable} font-sans antialiased`}
+				className={`${montserrat.variable} ${cardo.variable} flex min-h-screen flex-col font-sans antialiased`}
 			>
-				{children}
+				<div className="flex-1">{children}</div>
+				<Footer />
 			</body>
 		</html>
 	);

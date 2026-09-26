@@ -34,7 +34,7 @@ export default function CalendarPage() {
 	}, []);
 
 	return (
-		<div className="min-h-screen bg-background py-20 relative overflow-hidden">
+		<div className="bg-background py-20 relative overflow-hidden">
 			{/* Header */}
 			<NavBar />
 			<div className=" mx-auto px-4bg-background">

@@ -10,7 +10,7 @@ const MEMBERSHIP_FORM = "https://forms.gle/FZeehoTE2WP3o5yR9";
 
 export default function ContactPage() {
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="bg-background">
 			<NavBar />
 
 			<section className="py-24">

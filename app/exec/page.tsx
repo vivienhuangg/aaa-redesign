@@ -64,12 +64,17 @@ const profiles = {
 	"Alicia Ji": {
 		class: "27",
 		photo: "/images/exec/alicia_ji.jpg",
+		photo_position: "50% 30%",
+		photo_scale: 1.15,
 		major: "Artificial Intelligence and Decision Making (6-4)",
-		involved_in: "Sigma Kappa, MINCE",
+		involved_in: "Sigma Kappa, MINCE, Baker Foundation",
 		fav_memory: "Organizing & cooking for our annual Grains of Rice event!!",
 	},
 	"Gyeongwu Kim (GK)": {
 		class: "27",
+		photo: "/images/exec/gyeongwu_kim.jpg",
+		photo_position: "38% 36%",
+		photo_scale: 1.45,
 		major: "Computer Science and Engineering (6-3)",
 		involved_in: "Football, Phi Beta Epsilon",
 		fav_memory: "Nightmaaarket",
@@ -123,12 +128,16 @@ const profiles = {
 	},
 	"Juliana Chinzorig": {
 		class: "29",
+		photo: "/images/exec/juliana_chinzorig.jpg",
+		photo_position: "72% 28%",
 		major: "Design (4B) & Artificial Intelligence and Decision Making (6-4)",
 		involved_in: "UROP, Mongolian Students Association",
 		fav_memory: "Retreaaat kayaking and bonding :)",
 	},
 	"Bryan Chyu": {
 		class: "29",
+		photo: "/images/exec/bryan_chyu.jpg",
+		photo_position: "38% 28%",
 		major: "Engineering (2-A)",
 		involved_in: "Phi Delta Theta",
 		fav_memory: "Making s'mores at retreaaat",
@@ -275,7 +284,7 @@ export default function ExecPage() {
 	const { nameSlotRef, fontSize } = useSharedNameFontSize(memberNames);
 
 	return (
-		<div className="min-h-screen bg-background py-20 relative overflow-hidden">
+		<div className="bg-background py-20 relative overflow-hidden">
 			<NavBar />
 			<div className="container mx-auto px-4 sm:px-6">
 				<div className="mx-auto mb-12 max-w-2xl text-center">

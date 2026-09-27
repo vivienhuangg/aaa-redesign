@@ -7,8 +7,8 @@ import { ExecProfileCard } from "@/components/ui/card";
 const NAME_FONT_MAX = 20;
 const NAME_FONT_MIN = 13;
 
-function useSharedNameFontSize(names) {
-	const nameSlotRef = useRef(null);
+function useSharedNameFontSize(names: string[]) {
+	const nameSlotRef = useRef<HTMLParagraphElement>(null);
 	const [fontSize, setFontSize] = useState(NAME_FONT_MAX);
 	const namesKey = names.join("|");
 
@@ -27,7 +27,7 @@ function useSharedNameFontSize(names) {
 			const context = canvas.getContext("2d");
 			if (!context) return;
 
-			const fits = (size) => {
+			const fits = (size: number) => {
 				context.font = `${fontWeight} ${size}px ${fontFamily}`;
 				return allNames.every(
 					(name) => context.measureText(name).width <= width - 2,

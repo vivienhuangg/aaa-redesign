@@ -184,6 +184,7 @@ const profiles = {
 	},
 	"Preston Dinh": {
 		class: "29",
+		photo: "/images/exec/preston_row.jpg",
 		major: "Computer Science and Engineering (6-3)",
 		involved_in: "Men's Football",
 		fav_memory: "Bonding with exec at retreat",

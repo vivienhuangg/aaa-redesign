@@ -15,7 +15,8 @@
 
 # next.js
 /.next/
-/out/  # static export uploaded to MIT Scripts (see README)
+# static export uploaded to MIT Scripts (see README)
+/out/
 
 # production
 /build

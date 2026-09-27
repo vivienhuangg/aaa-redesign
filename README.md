@@ -56,16 +56,22 @@ rsync -av --delete out/ USER@HOST:/path/to/web/root/
 
 There is no build step on the server. Once the copy finishes, hard-refresh the site (Cmd+Shift+R) to see the change.
 
-### Finding the right web root (MIT Scripts)
+### asians.mit.edu (MIT Scripts)
 
-[asians.mit.edu](https://asians.mit.edu) is currently hosted on [MIT Scripts](https://scripts.mit.edu). Scripts serves each locker from `/mit/LOCKER/web_scripts/`, and a custom hostname can point at a locker **or at a subfolder inside it**. Uploading to the wrong folder will succeed silently and change nothing on the live site, so confirm the path first:
+[asians.mit.edu](https://asians.mit.edu) is hosted on [MIT Scripts](https://scripts.mit.edu) and serves from the **`aaa/` subfolder** of the `aaa` locker, i.e. `/mit/aaa/web_scripts/aaa/`. The full deploy is:
 
-- Log in to [Pony](https://pony.scripts.mit.edu/) (Scripts' hostname manager) with your MIT certificate. It lists every hostname for lockers you can access and the exact directory each one serves.
-- Or SSH in and look: `ssh USER@athena.dialup.mit.edu 'ls -la /mit/LOCKER/web_scripts/'`. The live site's files carry the date of the last upload.
+```bash
+npm run build
+rsync -av --delete --exclude .htaccess out/ YOUR_KERB@athena.dialup.mit.edu:/mit/aaa/web_scripts/aaa/
+```
 
-Then use that directory as the destination in the `rsync` command above, e.g. `USER@athena.dialup.mit.edu:/mit/LOCKER/web_scripts/SUBFOLDER/`. Athena logins prompt for your Kerberos password and Duo.
+Replace `YOUR_KERB` with your Athena username. You'll be prompted for your Kerberos password and Duo. Then hard-refresh the site.
 
-You need write access to that locker. If you don't have it, an existing member with access can grant it from Athena with `fs sa /mit/LOCKER/web_scripts USER rlidwk` (repeat for the subfolder if there is one).
+Watch the destination path: the locker root `/mit/aaa/web_scripts/` is **not** the live site (it's what `aaa.scripts.mit.edu` shows), and it also holds old site versions (`aaa_2024`, `aaa_old`, ...). Uploading to the wrong folder succeeds silently and changes nothing on asians.mit.edu.
+
+If the hostname is ever re-pointed, you can confirm the current directory in [Pony](https://pony.scripts.mit.edu/) (Scripts' hostname manager, MIT certificate login), which lists each hostname and the folder it serves, or by SSHing in and running `ls -la /mit/aaa/web_scripts/` to find the folder with the most recent upload date.
+
+You need write access to the locker. An existing member with access can grant it from Athena with `fs sa /mit/aaa/web_scripts YOUR_KERB rlidwk` and `fs sa /mit/aaa/web_scripts/aaa YOUR_KERB rlidwk`.
 
 ### Other notes
 

@@ -4,7 +4,6 @@ import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Calendar } from "@/components/calendar";
-import NavBar from "@/components/NavBar/NavBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,10 +33,8 @@ export default function CalendarPage() {
 	}, []);
 
 	return (
-		<div className="bg-background py-20 relative overflow-hidden">
-			{/* Header */}
-			<NavBar />
-			<div className=" mx-auto px-4bg-background">
+		<div className="bg-background py-20 pt-28 relative">
+			<div className="mx-auto px-4 bg-background">
 				{/* Calendar Section */}
 				<div className="container mx-auto px-4">
 					<div className="text-center mb-12">

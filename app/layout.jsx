@@ -1,5 +1,6 @@
 import { Cardo, Montserrat } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
+import NavBar from "@/components/NavBar/NavBar";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
 				suppressHydrationWarning={true}
 				className={`${montserrat.variable} ${cardo.variable} flex min-h-screen flex-col font-sans antialiased`}
 			>
+				<NavBar />
 				<div className="flex-1">{children}</div>
 				<Footer />
 			</body>

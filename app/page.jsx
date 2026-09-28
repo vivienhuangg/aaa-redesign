@@ -3,7 +3,6 @@
 import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 import HeroImage from "@/components/HomePage/HeroImage";
-import NavBar from "@/components/NavBar/NavBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,9 +23,6 @@ export default function HomePage() {
 
 	return (
 		<div className="bg-background relative">
-			{/* NavBar overlaying hero image, scrolls away with page */}
-			<NavBar />
-
 			<HeroImage />
 
 			<div className="flex flex-col gap-16 mx-auto p-12 px-36">

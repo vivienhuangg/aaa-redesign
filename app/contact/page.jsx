@@ -2,7 +2,6 @@
 
 import { Check, Instagram, Mail } from "lucide-react";
 import Link from "next/link";
-import NavBar from "@/components/NavBar/NavBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -10,10 +9,8 @@ const MEMBERSHIP_FORM = "https://forms.gle/FZeehoTE2WP3o5yR9";
 
 export default function ContactPage() {
 	return (
-		<div className="bg-background">
-			<NavBar />
-
-			<section className="py-24">
+		<div className="bg-background pt-[4.25rem]">
+			<section className="py-16">
 				<div className="container mx-auto px-4 sm:px-6">
 					<Card className="mx-auto mb-10 max-w-4xl border-border bg-card">
 						<CardHeader className="text-center">

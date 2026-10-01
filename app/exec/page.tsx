@@ -281,7 +281,7 @@ export default function ExecPage() {
 	const { nameSlotRef, fontSize } = useSharedNameFontSize(memberNames);
 
 	return (
-		<div className="bg-background py-20 pt-28 relative">
+		<div className="bg-background py-20 relative">
 			<div className="container mx-auto px-4 sm:px-6">
 				<div className="mx-auto mb-12 max-w-2xl text-center">
 					<h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6">

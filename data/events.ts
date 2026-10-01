@@ -24,13 +24,16 @@ export function getEventStart(event: Pick<CalendarEvent, "date" | "start_time">)
 	return new Date(`${event.date}T${event.start_time ?? "23:59"}:00`);
 }
 
+const easternDate = {
+	weekday: "long",
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+	timeZone: "America/New_York",
+} as const;
+
 export function formatEventDate(date: string) {
-	return new Date(`${date}T12:00:00`).toLocaleDateString("en-US", {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
+	return new Date(`${date}T12:00:00`).toLocaleDateString("en-US", easternDate);
 }
 
 function formatClockTime(time: string) {

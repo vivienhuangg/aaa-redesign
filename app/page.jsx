@@ -1,5 +1,3 @@
-"use client";
-
 import { CalendarIcon, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 import HeroImage from "@/components/HomePage/HeroImage";

@@ -14,9 +14,14 @@ const links = [
 export default function NavBar() {
 	const [logoHovered, setLogoHovered] = React.useState(false);
 	const pathname = usePathname();
+	const isHome = pathname === "/";
 
 	return (
-		<header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/90 shadow-sm backdrop-blur-md">
+		<header
+			className={`z-50 w-full border-b border-border/80 bg-background/90 shadow-sm backdrop-blur-md ${
+				isHome ? "absolute top-0 left-0" : "sticky top-0"
+			}`}
+		>
 			<div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
 				<Link
 					href="/"

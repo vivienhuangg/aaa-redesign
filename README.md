@@ -56,6 +56,8 @@ rsync -av --delete out/ USER@HOST:/path/to/web/root/
 
 There is no build step on the server. Once the copy finishes, hard-refresh the site (Cmd+Shift+R) to see the change.
 
+On MIT Scripts, Next.js `Link` clicks do **not** load the new page. App Router static export fetches a per-route `index.txt` file for client-side navigation, and Scripts returns 403 ("Document not readable") for those `.txt` files. A refresh works because it loads `index.html`. Internal nav therefore uses normal `<a>` tags so a click is a full page load, same as refresh.
+
 ### asians.mit.edu (MIT Scripts)
 
 [asians.mit.edu](https://asians.mit.edu) is hosted on [MIT Scripts](https://scripts.mit.edu) and serves from the **`aaa/` subfolder** of the `aaa` locker, i.e. `/mit/aaa/web_scripts/aaa/`. The full deploy is:
@@ -65,7 +67,7 @@ npm run build
 rsync -av --delete --exclude .htaccess out/ YOUR_KERB@athena.dialup.mit.edu:/mit/aaa/web_scripts/aaa/
 ```
 
-Replace `YOUR_KERB` with your Athena username. You'll be prompted for your Kerberos password and Duo. Then hard-refresh the site.
+Replace `YOUR_KERB` with your Athena username. You'll be prompted for your Kerberos password and Duo. Then hard-refresh the site (Cmd+Shift+R) once so the browser drops the old JavaScript. After that, clicking exec/calendar/join should load the same HTML a refresh does.
 
 Watch the destination path: the locker root `/mit/aaa/web_scripts/` is **not** the live site (it's what `aaa.scripts.mit.edu` shows), and it also holds old site versions (`aaa_2024`, `aaa_old`, ...). Uploading to the wrong folder succeeds silently and changes nothing on asians.mit.edu.
 

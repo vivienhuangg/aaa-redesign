@@ -125,11 +125,11 @@ export default function HomePage() {
 								)}
 							</div>
 							<div className="text-center mt-8">
-								<Link href="/calendar">
+								<a href="/calendar/">
 									<Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-3">
 										View Full Calendar
 									</Button>
-								</Link>
+								</a>
 							</div>
 						</CardContent>
 					</Card>

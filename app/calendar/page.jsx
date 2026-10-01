@@ -33,7 +33,7 @@ export default function CalendarPage() {
 	}, []);
 
 	return (
-		<div className="bg-background py-20 relative">
+		<div className="bg-background pt-28 pb-20 relative">
 			<div className="mx-auto px-4 bg-background">
 				{/* Calendar Section */}
 				<div className="container mx-auto px-4">

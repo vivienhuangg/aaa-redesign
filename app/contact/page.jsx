@@ -10,7 +10,7 @@ const MEMBERSHIP_FORM = "https://forms.gle/FZeehoTE2WP3o5yR9";
 export default function ContactPage() {
 	return (
 		<div className="bg-background">
-			<section className="py-16">
+			<section className="pt-28 pb-16">
 				<div className="container mx-auto px-4 sm:px-6">
 					<Card className="mx-auto mb-10 max-w-4xl border-border bg-card">
 						<CardHeader className="text-center">
